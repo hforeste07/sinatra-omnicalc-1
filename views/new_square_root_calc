@@ -2,7 +2,7 @@
 
 <form action="/square_root/results">
   <label for="user_square_root_input">Enter a number</label>
-  <input id="user_square_root_input" type="text" name="users_number">
+  <input id="user_square_root_input" type="text" name="users_square_root_number">
 
   <button>Calculate square root</button>
 </form>
