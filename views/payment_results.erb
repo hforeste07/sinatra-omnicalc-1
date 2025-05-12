@@ -11,22 +11,22 @@
     Number of years
   </dt>
   <dd>
-    <%= @the_years %>
+    <%= @the_years.to_i %>
   </dd>
   <dt>
     Principal
   </dt>
   <dd>
-    <%= @the_principal %>
+    <%= @the_principal.to_fs(:currency) %>
   </dd>
   <dt>
     Payment
   </dt>
   <dd>
-    <%= @the_result %>
+    <%= @the_results.round(2).to_fs(:currency) %>
   </dd>
 </dl>
 
 <a href="/square/new">
-  Calculate another square
+  Calculate another monthly payment
 </a>

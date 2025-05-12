@@ -31,15 +31,36 @@ end
 
 get("/payment/results") do
   
-  @the_apr = params.fetch("users_apr_number").to_f
-  @the_years = params.fetch("users_years_number").to_f
-  @the_principal = params.fetch("users_principal_number").to_f
-  @the_results = @the_principal * @the_apr * @the_years
+  @the_apr = params.fetch("users_apr_number").to_f.to_fs(:percentage, { :precision => 4 })
+  @the_monthly_interest_rate = params.fetch("users_apr_number").to_f / 1200
 
-  erb(:square_root_results)
+  @the_years = params.fetch("users_years_number").to_i
+  @the_months = @the_years * 12
+
+  @the_principal = params.fetch("users_principal_number").to_f
+  
+  @the_numerator = @the_years * (@the_monthly_interest_rate * @the_principal) 
+
+  @part_one = 1 + @the_monthly_interest_rate
+  @part_two = @the_months * - 1
+  @part_three = @part_one ** @part_two
+  @the_denominator = 1 - @part_three
+
+  @the_results = @the_numerator / @the_denominator
+
+  erb(:payment_results)
 end
 
 
 get("/random/new") do
   erb(:random_with_form)
+end
+
+get("/random/results") do
+
+  @the_little_num = params.fetch("users_little_number").to_f
+  @the_big_num = params.fetch("users_big_number").to_f
+  @the_results = sample{@the_little_num..@the_big_num}
+
+  erb(:square_root_results)
 end
