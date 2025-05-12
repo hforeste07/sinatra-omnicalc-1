@@ -31,22 +31,17 @@ end
 
 get("/payment/results") do
   
-  @the_apr = params.fetch("users_apr_number").to_f.to_fs(:percentage, { :precision => 4 })
-  @the_monthly_interest_rate = params.fetch("users_apr_number").to_f / 1200
+  @the_apr = params.fetch("users_apr").to_f
+  @the_years = params.fetch("users_years").to_i
+  @the_principal = params.fetch("users_pv").to_f
 
-  @the_years = params.fetch("users_years_number").to_i
-  @the_months = @the_years * 12
+  @r = @the_apr / 100 / 12
+  @n = @the_years * 12
 
-  @the_principal = params.fetch("users_principal_number").to_f.to_fs(:currency)
-  
-  @the_numerator = @the_years * (@the_monthly_interest_rate * @the_principal) 
+  @numerator = @r * @the_principal
+  @denominator = 1 - (1 + @r) ** (-@n)
 
-  @part_one = 1 + @the_monthly_interest_rate
-  @part_two = @the_months * - 1
-  @part_three = @part_one ** @part_two
-  @the_denominator = 1 - @part_three
-
-  @the_results = @the_numerator / @the_denominator
+  @the_results = @numerator / @denominator
 
   erb(:payment_results)
 end
