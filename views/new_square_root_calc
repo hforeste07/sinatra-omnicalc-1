@@ -1,0 +1,8 @@
+<h1>Calculate the square root of a number</h1>
+
+<form action="/square_root/results">
+  <label for="user_square_root_input">Enter a number</label>
+  <input id="user_square_root_input" type="text" name="users_number">
+
+  <button>Calculate square root</button>
+</form>
