@@ -37,7 +37,7 @@ get("/payment/results") do
   @the_years = params.fetch("users_years_number").to_i
   @the_months = @the_years * 12
 
-  @the_principal = params.fetch("users_principal_number").to_f
+  @the_principal = params.fetch("users_principal_number").to_f.to_fs(:currency)
   
   @the_numerator = @the_years * (@the_monthly_interest_rate * @the_principal) 
 
@@ -58,9 +58,9 @@ end
 
 get("/random/results") do
 
-  @the_little_num = params.fetch("users_little_number").to_f
-  @the_big_num = params.fetch("users_big_number").to_f
-  @the_results = sample{@the_little_num..@the_big_num}
+  @the_little_num = params.fetch("users_min_number").to_f
+  @the_big_num = params.fetch("users_max_number").to_f
+  @the_results = rand(@the_little_num...@the_big_num).to_f
 
-  erb(:square_root_results)
+  erb(:random_results)
 end
